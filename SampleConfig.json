@@ -6,7 +6,7 @@
 
   "sourceUrl": "https://plugins.grayjay.app/Sample/SampleConfig.json",
   "repositoryUrl": "https://futo.org",
-  "scriptUrl": "./SampleScript.js",
+  "scriptUrl": "https://github.com/sylm54/test/blob/main/SampleScript.js",
   "version": 23,
 
   "iconUrl": "https://cdn.hypnotube.com/images/logo.png",
