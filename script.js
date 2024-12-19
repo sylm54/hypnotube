@@ -112,7 +112,6 @@ class HVideo extends PlatformVideoDetails {
     let inner = dom.querySelector(".content-inner-col");
     let vidurl = inner.querySelector("source").getAttribute("src");
     let user = dom.querySelector("a.name_normal");
-    log("Got " + vidurl);
     super({
       id: new PlatformID(PLATFORM, url, config.id),
       name: inner.querySelector(".item-tr-col h1").text,
@@ -136,6 +135,7 @@ class HVideo extends PlatformVideoDetails {
       video: new VideoSourceDescriptor([
         new VideoUrlSource({
           container: "video/mp4",
+          name: "mp4",
           url: vidurl,
         }),
       ]),
