@@ -136,8 +136,8 @@ class HVideo extends PlatformVideoDetails {
         new VideoUrlSource({
           container: "video/mp4",
           name: "mp4",
-          width: "1920",
-          height: "1080",
+          width: 1920,
+          height: 1080,
           url: vidurl,
         }),
       ]),
