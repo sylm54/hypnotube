@@ -17,5 +17,23 @@
   "packages": ["Http", "DOMParser"],
 
   "allowEval": false,
-  "allowUrls": ["everywhere"]
+  "allowUrls": ["everywhere"],
+  "settings": [
+    {
+			"variable": "mainfeed",
+			"name": "Home Feed",
+			"description": "What Home Feed should be displayed",
+			"type": "Dropdown",
+			"default": "1",
+			"options": ["Latest", "Top Rated", "Most Discussed","Most Viewed"]
+		},
+    {
+			"variable": "mainfeed_time",
+			"name": "Home Feed Time",
+			"description": "Over what TimeFrame should above be aggregated",
+			"type": "Dropdown",
+			"default": "1",
+			"options": ["All Time", "Today", "Week","Month"]
+		}
+  ]
 }

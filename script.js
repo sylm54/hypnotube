@@ -1,10 +1,11 @@
 const PLATFORM = "Hypnotube";
 
 var config = {};
-
+var settings = {};
 //Source Methods
 source.enable = function (conf, settings, savedState) {
   config = conf ?? {};
+  settings = settings ?? {};
   const client = http.getDefaultClient(false);
   client.setDoApplyCookies(true);
   client.setDoUpdateCookies(true);
@@ -12,7 +13,40 @@ source.enable = function (conf, settings, savedState) {
 };
 
 source.getHome = function () {
-  return new FeedPager("https://hypnotube.com/most-viewed/month");
+  log("getHome");
+  log("Settings:\n" + JSON.stringify(settings, null, "   "));
+  let category = "most-recent";
+  switch (settings["mainfeed"]) {
+    case "Latest":
+      category = "most-recent";
+      break;
+    case "Top Rated":
+      category = "top-rated";
+      break;
+    case "Most Discussed":
+      category = "most-discussed";
+      break;
+    case "Most Viewed":
+      category = "most-viewed";
+      break;
+  }
+  let time = "";
+  switch (settings["mainfeed_time"]) {
+    case "All Time":
+      time = "";
+      break;
+    case "Today":
+      time = "day/";
+      break;
+    case "Week":
+      time = "week/";
+      break;
+    case "Month":
+      time = "month/";
+      break;
+  }
+  log(`https://hypnotube.com/${category}/${time}`);
+  return new FeedPager(`https://hypnotube.com/${category}/${time}`);
 };
 
 source.searchSuggestions = function (query) {
@@ -26,21 +60,21 @@ source.getSearchCapabilities = () => {
   };
 };
 source.search = function (query, type, order, filters) {
-	throw new ScriptException("This is a sample");
-//   let res = http.POST(
-//     "https://hypnotube.com/searchgate.php?q=" +
-//       encodeURI(query) +
-//       "&type=videos",
-//     "",
-// 	{},
-//     false
-//   );
-//   if (!res.isOk) {
-//     throw new ScriptException(
-//       "Error trying to post search for '" + query + "'"
-//     );
-//   }
-//   return new FeedPager("https://hypnotube.com/search/" + encodeURI(query));
+  throw new ScriptException("This is a sample");
+  //   let res = http.POST(
+  //     "https://hypnotube.com/searchgate.php?q=" +
+  //       encodeURI(query) +
+  //       "&type=videos",
+  //     "",
+  // 	{},
+  //     false
+  //   );
+  //   if (!res.isOk) {
+  //     throw new ScriptException(
+  //       "Error trying to post search for '" + query + "'"
+  //     );
+  //   }
+  //   return new FeedPager("https://hypnotube.com/search/" + encodeURI(query));
 };
 source.getSearchChannelContentsCapabilities = function () {
   return {
@@ -119,12 +153,12 @@ class HVideo extends PlatformVideoDetails {
       author:
         user != undefined
           ? new PlatformAuthorLink(
-              new PlatformID(PLATFORM, user.getAttribute("href"), config.id), //obj.channel.name, config.id),
-              user.querySelector(".user-name").text, //obj.channel.displayName,
-              user.getAttribute("href"), //obj.channel.url,
-              user.querySelector("img").getAttribute("src"),
-              ""
-            )
+            new PlatformID(PLATFORM, user.getAttribute("href"), config.id), //obj.channel.name, config.id),
+            user.querySelector(".user-name").text, //obj.channel.displayName,
+            user.getAttribute("href"), //obj.channel.url,
+            user.querySelector("img").getAttribute("src"),
+            ""
+          )
           : undefined,
       // datetime: Math.round((new Date(ldJson.uploadDate)).getTime() / 1000),
       // duration: flashvars.video_duration,
@@ -213,7 +247,7 @@ class FeedPager extends ContentPager {
   nextPage() {
     this.page++;
     const geturl = this.url + "/page" + this.page + ".html";
-    log("Geturl: " + geturl + " Cookie: " + this.cookie);
+    log("Geturlv: " + geturl + " Cookie: " + this.cookie);
     let res = undefined;
     res = http.GET(geturl, {}, false);
 
@@ -253,13 +287,13 @@ function getVideos(items) {
   for (let item of items) {
     let titlehref = item.querySelector("a");
     let img = item.querySelector("img");
-    log("Getting video: " + titlehref.getAttribute("title"));
+    //log("Getting video: " + titlehref.getAttribute("title"));
     if (img == undefined) continue;
     let duration = -1;
     try {
       let time = item.querySelector(".time").text.split(":");
       duration = parseInt(time[0]) * 60 + parseInt(time[1]);
-    } catch (e) {}
+    } catch (e) { }
     videos.push(
       new PlatformVideo({
         id: new PlatformID(
