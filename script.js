@@ -3,45 +3,51 @@ const PLATFORM = "Hypnotube";
 var config = {};
 var settings = {};
 //Source Methods
-source.enable = function (conf, settings, savedState) {
+source.enable = function (conf, sett, savedState) {
   config = conf ?? {};
-  settings = settings ?? {};
+  settings = sett ?? {};
   const client = http.getDefaultClient(false);
   client.setDoApplyCookies(true);
   client.setDoUpdateCookies(true);
   client.setDoAllowNewCookies(true);
 };
 
+source.setSettings = function(newsettings) {
+  log("New Settings:\n" + JSON.stringify(newsettings, null, "   "));
+	settings = newsettings;
+}
+
+
 source.getHome = function () {
   log("getHome");
   log("Settings:\n" + JSON.stringify(settings, null, "   "));
   let category = "most-recent";
   switch (settings["mainfeed"]) {
-    case "Latest":
+    case 0:
       category = "most-recent";
       break;
-    case "Top Rated":
+    case 1:
       category = "top-rated";
       break;
-    case "Most Discussed":
+    case 2:
       category = "most-discussed";
       break;
-    case "Most Viewed":
+    case 3:
       category = "most-viewed";
       break;
   }
   let time = "";
   switch (settings["mainfeed_time"]) {
-    case "All Time":
+    case 0:
       time = "";
       break;
-    case "Today":
+    case 1:
       time = "day/";
       break;
-    case "Week":
+    case 2:
       time = "week/";
       break;
-    case "Month":
+    case 3:
       time = "month/";
       break;
   }

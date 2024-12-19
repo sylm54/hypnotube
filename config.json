@@ -6,10 +6,10 @@
 
   "sourceUrl": "https://raw.githubusercontent.com/sylm54/hypnotube/refs/heads/main/config.json",
   "repositoryUrl": "https://github.com/sylm54/hypnotube",
-  "scriptUrl": "https://raw.githubusercontent.com/sylm54/hypnotube/refs/heads/main/script.js",
+  "scriptUrl": "./script.js",
   "version": 26,
 
-  "iconUrl": "https://raw.githubusercontent.com/sylm54/hypnotube/refs/heads/main/logo.png",
+  "iconUrl": "./logo.png",
   "id": "bde2d2b1-0056-4053-901d-5f2861eb5b1b",
 
   "scriptSignature": "",
@@ -24,7 +24,7 @@
 			"name": "Home Feed",
 			"description": "What Home Feed should be displayed",
 			"type": "Dropdown",
-			"default": "1",
+			"default": "0",
 			"options": ["Latest", "Top Rated", "Most Discussed","Most Viewed"]
 		},
     {
@@ -32,7 +32,7 @@
 			"name": "Home Feed Time",
 			"description": "Over what TimeFrame should above be aggregated",
 			"type": "Dropdown",
-			"default": "1",
+			"default": "0",
 			"options": ["All Time", "Today", "Week","Month"]
 		}
   ]
